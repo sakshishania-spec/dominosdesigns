@@ -1,0 +1,31 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="456.025" height="456.025" viewBox="0 0 456.025 456.025" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Play">
+<g id="Blur" filter="url(#filter0_f_0_15)">
+<circle cx="228.013" cy="228.013" r="68.0127" fill="white" fill-opacity="0.04"/>
+</g>
+<foreignObject x="36.9991" y="60.9991" width="381.527" height="381.527"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(0px);clip-path:url(#bgblur_0_0_15_clip_path);height:100%;width:100%"></div></foreignObject><g id="BG" filter="url(#filter1_d_0_15)" data-figma-bg-blur-radius="0">
+<circle cx="227.763" cy="227.763" r="36.7636" fill="#0F1526" fill-opacity="0.7" shape-rendering="crispEdges"/>
+</g>
+<g id="Icon/Outline/play">
+<path id="Icon" d="M222.68 238.426C221.359 239.392 219.5 238.448 219.5 236.811V217.772C219.5 216.135 221.359 215.192 222.68 216.157L235.707 225.677C236.8 226.476 236.8 228.108 235.707 228.906L222.68 238.426Z" fill="#E9EDF5"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_15" x="0" y="0" width="456.025" height="456.025" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="80" result="effect1_foregroundBlur_0_15"/>
+</filter>
+<filter id="filter1_d_0_15" x="36.9991" y="60.9991" width="381.527" height="381.527" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="24"/>
+<feGaussianBlur stdDeviation="77"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_15"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_15" result="shape"/>
+</filter>
+<clipPath id="bgblur_0_0_15_clip_path" transform="translate(-36.9991 -60.9991)"><circle cx="227.763" cy="227.763" r="36.7636"/>
+</clipPath></defs>
+</svg>
