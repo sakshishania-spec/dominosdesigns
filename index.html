@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Mtap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1020;
+    --surface: #141a2d;
+    --navy: #0e2a66;
+    --text: #e9edf5;
+    --text-70: rgba(233, 237, 245, 0.7);
+    --text-60: rgba(233, 237, 245, 0.6);
+    --accent: #4979ff;
+    --primary: #004eff;
+    --grad-text: linear-gradient(90deg, #6f95ff 41.641%, #a38fff 79.483%);
+    /* left edge of the 1440px design canvas, centred in the viewport */
+    --ox: calc(50% - 720px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  .page { position: relative; width: 100%; overflow: hidden; }
+  .container { position: relative; width: 1200px; max-width: calc(100% - 48px); margin: 0 auto; }
+
+  /* ---------- decorative layers ---------- */
+  .decor { position: absolute; pointer-events: none; }
+  .glow { position: absolute; pointer-events: none; }
+  .glow > img { position: absolute; max-width: none; width: auto; height: auto; }
+  .texture {
+    position: absolute; left: 0; right: 0; pointer-events: none;
+    background: url(assets/hero-texture.png) top left / 50px 50px;
+    opacity: 0.03;
+  }
+  .grad-text {
+    background-image: var(--grad-text);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+
+  /* ---------- section heading ---------- */
+  .sec-head { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  .sec-head h2 { font-size: 40px; font-weight: 600; line-height: normal; color: var(--text); }
+  .sec-head h2 span { display: inline-block; }
+  .sec-head p { font-size: 20px; line-height: 28px; color: var(--text-70); max-width: 1071px; }
+
+  /* ---------- header ---------- */
+  .site-header {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+    height: 100px;
+  }
+  .site-header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .site-header .left { display: flex; align-items: center; gap: 56px; }
+  .logo { position: relative; width: 131.04px; height: 52px; overflow: hidden; flex-shrink: 0; }
+  .logo img { position: absolute; max-width: none; height: 140.16%; width: 114.24%; left: -7.04%; top: -20.08%; }
+  .nav { display: flex; align-items: center; gap: 20px; }
+  .nav a, .nav button {
+    font: 500 16px/24px 'Poppins', sans-serif; color: rgba(233, 237, 245, 0.8);
+    width: 116px; text-align: center; transition: color .2s;
+  }
+  .nav a:hover, .nav button:hover { color: var(--text); }
+  .nav a.active { font-weight: 600; color: var(--accent); text-align: left; }
+  .nav button {
+    width: auto; display: flex; align-items: center; gap: 8px; padding: 4px 8px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .nav button img { width: 20px; height: 20px; transform: rotate(180deg); }
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 42px; padding: 8px 12px; border-radius: 8px;
+    background: var(--primary); color: #fff;
+    font: 600 16px/24px 'Poppins', sans-serif;
+    box-shadow: 0 1px 5px rgba(0,0,0,.12), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2);
+    transition: background .2s;
+  }
+  .btn-primary:hover { background: #1f63ff; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; height: 887px; }
+  .hero-copy {
+    position: absolute; top: 180px; left: 50%; transform: translateX(-50%);
+    width: 812px; max-width: calc(100% - 48px);
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+    z-index: 2;
+  }
+  .hero-copy h1 { font-size: 60px; font-weight: 700; line-height: normal; color: var(--text); }
+  .hero-copy h1 .grad {
+    background-image: linear-gradient(89.76deg, #6f95ff 45.986%, #a38fff 94.365%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-copy p { font-size: 20px; line-height: 28px; color: var(--text-70); }
+
+  .hero-band {
+    position: absolute; left: 0; right: 0; top: 792px; height: 296px;
+    background: rgba(255,255,255,0.04); filter: blur(57px); pointer-events: none;
+  }
+
+  .pcard { position: absolute; z-index: 1; }
+  .pcard .frame {
+    position: absolute; left: 0; top: 0; border: 2px solid #fff; border-radius: 24px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .pcard .bar { position: absolute; left: 0; top: 0; height: 24px; background: rgba(20,26,45,.7); border-radius: 40px 40px 0 0; }
+  .pcard .dots { position: absolute; }
+  .pcard .dots img { width: 100%; height: 100%; }
+  .pcard .photo { position: absolute; overflow: hidden; }
+  .pcard .photo img { position: absolute; max-width: none; }
+  .glass {
+    position: absolute; border: 0 solid #fff;
+    backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  }
+
+  /* ---------- journey ---------- */
+  .journey {
+    position: relative; height: 1208px; border-radius: 40px; background: var(--surface); overflow: hidden;
+  }
+  .journey .sec-head { position: absolute; top: 60px; left: 40px; right: 40px; }
+  .journey-grid {
+    position: absolute; left: calc(41.67% + 14px); top: 320px; width: 579px; height: 821px; overflow: hidden;
+  }
+  .journey-grid .tile { position: absolute; inset: 0; background: url(assets/grid-24.png) top left / 24px 24px; opacity: .05; }
+  .timeline { position: absolute; left: 40px; top: 264px; display: flex; gap: 24px; align-items: flex-start; }
+  .tl-rail { position: relative; width: 32px; height: 847px; flex-shrink: 0; }
+  .tl-rail > * { position: absolute; }
+  .tl-rail img { width: 100%; height: 100%; }
+  .tl-line { left: 14px; top: 24px; width: 125px; height: 0; transform-origin: 0 0; transform: rotate(90deg) translateY(-100%); }
+  .tl-line img { position: absolute; left: 0; right: 0; top: -1px; bottom: 0; }
+  .tl-target { left: 0; top: 815px; width: 32px; height: 32px; overflow: hidden; }
+  .tl-target img { position: absolute; max-width: none; width: 135.49%; height: 144.17%; left: -17.75%; top: -17.22%; }
+  .tl-items { width: 538px; display: flex; flex-direction: column; gap: 40px; }
+  .tl-item { display: flex; flex-direction: column; gap: 8px; }
+  .tl-item h3 { font-size: 24px; font-weight: 600; line-height: 36px; color: var(--text-70); }
+  .tl-item:first-child h3 { color: var(--accent); }
+  .tl-item p { font-size: 18px; line-height: 28px; color: var(--text-70); }
+  .tl-item p.lg { font-size: 20px; }
+  .tl-item p strong { font-weight: 500; color: var(--text); }
+  .journey-photo {
+    position: absolute; left: calc(58.33% + 2px); top: 306px; width: 458px; height: 440px;
+    border-radius: 16px; overflow: hidden;
+  }
+  .journey-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- vision ---------- */
+  .vision { position: relative; height: 792px; margin-top: 120px; background: var(--navy); overflow: hidden; }
+  .vision-grid { position: absolute; left: -9px; top: -33px; width: 1937px; height: 1145px; pointer-events: none; }
+  .vision-grid img { position: absolute; width: 65px; height: 65px; }
+  .vision .container { padding-top: 60px; display: flex; flex-direction: column; gap: 40px; }
+  .vision .sec-head h2, .vision .sec-head p { color: #fff; }
+  .vision .sec-head p { max-width: none; }
+  .vcards { display: flex; gap: 24px; }
+  .vcard {
+    position: relative; flex: 1 1 384px; height: 508px; overflow: hidden;
+    background: var(--surface); border: 1px solid rgba(91,139,255,.2); border-radius: 16px;
+  }
+  .vcard-body { position: absolute; left: 23px; top: 23px; width: 336px; display: flex; flex-direction: column; gap: 20px; }
+  .vcard-img { position: relative; width: 336px; height: 240px; border-radius: 16px; overflow: hidden; }
+  .vcard-img img { width: 100%; height: 100%; object-fit: cover; }
+  .vcard-img img.tall { position: absolute; left: 0; top: 0; height: 108.11%; object-fit: fill; }
+  .vcard-icon { position: relative; width: 48px; height: 48px; }
+  .vcard-icon img { position: absolute; inset: -8.33%; width: 116.66%; height: 116.66%; }
+  .vcard h3 { font-size: 20px; font-weight: 600; line-height: 28px; color: var(--text); margin-bottom: 8px; }
+  .vcard p { font-size: 16px; line-height: 24px; color: var(--text-70); }
+
+  /* ---------- team ---------- */
+  .team { position: relative; margin-top: 120px; display: flex; flex-direction: column; gap: 40px; }
+  .team-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .team-rows { display: flex; flex-direction: column; gap: 40px; }
+  .member { position: relative; height: 244px; }
+  .member-card {
+    position: absolute; left: 0; right: 0; top: 71px; height: 173px; overflow: hidden;
+    background: var(--surface); border: 2px solid rgba(2,136,209,.2); border-radius: 12px;
+    box-shadow: 0 2px 4px 1px rgba(2,136,209,.1);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    padding-top: 69px; text-align: center; color: var(--text);
+    transition: border-color .2s, transform .2s;
+  }
+  .member:hover .member-card { border-color: rgba(2,136,209,.5); }
+  .member-card h3 { font-size: 18px; font-weight: 600; line-height: 28px; }
+  .member-card p { font-size: 16px; line-height: 20px; }
+  .avatar {
+    position: absolute; top: 0; left: 25.69%; width: 48.62%; height: 140px; border-radius: 100px; overflow: hidden;
+    border: 1px solid rgba(2,136,209,.2); box-shadow: 0 2px 4px 2px rgba(2,136,209,.2);
+  }
+  .avatar.b2 { border-width: 2px; }
+  .avatar.plain { border: 2px solid rgba(255,255,255,.1); box-shadow: none; }
+  .avatar img { position: absolute; max-width: none; }
+  .av1 img { width: 149.04%; height: 100%; left: -49.48%; top: 0; }
+  .av2 img { width: 149.04%; height: 161.2%; left: -29.34%; top: -3%; }
+  .av3 img { width: 100%; height: 119.79%; left: .52%; top: -2.13%; }
+  .av4 img { width: 100%; height: 135.42%; left: 0; top: -3.69%; }
+
+  /* ---------- footprints ---------- */
+  .footprints { position: relative; height: 744px; margin-top: 120px; background: var(--navy); overflow: hidden; }
+  .footprints .sec-head { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); width: 1200px; max-width: calc(100% - 48px); }
+  .footprints .sec-head h2, .footprints .sec-head p { color: #fff; }
+  .map { position: absolute; left: calc(50% - 512px); top: 196px; width: 1024px; height: 488px; }
+  .map > .dots { position: absolute; inset: 0; width: 1024px; height: 488px; }
+  .pin { position: absolute; width: 24px; height: 32px; transition: transform .2s; }
+  .pin img { width: 100%; height: 100%; }
+  .tip {
+    position: absolute; width: 142px; display: flex; flex-direction: column; align-items: center;
+    filter: drop-shadow(0 12px 8px rgba(16,24,40,.08)) drop-shadow(0 4px 3px rgba(16,24,40,.03));
+  }
+  .tip-body {
+    background: var(--surface); border-radius: 8px; padding: 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  }
+  .tip-flag { position: relative; width: 16px; height: 16px; border-radius: 33px; overflow: hidden; box-shadow: 0 1px 2px rgba(16,24,40,.05); }
+  .tip-flag img { position: absolute; max-width: none; width: 150.27%; height: 105.26%; left: 0; top: 0; }
+  .tip h4 { font: 500 10px/16px 'Poppins', sans-serif; color: var(--text); white-space: nowrap; }
+  .tip p { font: 400 10px/16px 'Poppins', sans-serif; color: rgba(233,237,245,.6); white-space: nowrap; margin-top: -4px; }
+  .tip-arrow { position: relative; width: 16px; height: 6px; }
+  .tip-arrow img { position: absolute; left: 0; right: 0; bottom: 0; top: -41.91%; width: 16px; height: 8.515px; }
+
+  /* ---------- gallery ---------- */
+  .life { position: relative; height: 1214px; }
+  .life .container { padding-top: 120px; display: flex; flex-direction: column; gap: 40px; }
+  .life .sec-head { gap: 16px; }
+  .life .sec-head p { max-width: none; }
+  .tiles { position: relative; width: 1200px; height: 650px; }
+  .tile { position: absolute; overflow: hidden; border-radius: 16px; }
+  .tile > img { position: absolute; max-width: none; object-fit: cover; }
+  .tile img.zoom { transition: transform .5s ease; }
+  .tile:hover img.zoom { transform: scale(1.04); }
+  .play { position: absolute; left: 228px; top: 145px; width: 136.025px; height: 136.025px; pointer-events: none; }
+  .play img { position: absolute; max-width: none; inset: -117.63%; width: 335.26%; height: 335.26%; }
+  .more { cursor: pointer; }
+  .more .shade { position: absolute; inset: 0; background: rgba(255,255,255,.1); }
+  .more .label {
+    position: absolute; left: 72px; top: 85px; display: flex; align-items: center;
+    font-size: 24px; font-weight: 600; line-height: 36px; color: var(--text); white-space: pre;
+  }
+  .more .label img { width: 24px; height: 24px; }
+  .life-band {
+    position: absolute; left: 0; right: 0; top: 1003px; height: 34px;
+    background: rgba(255,255,255,.04); filter: blur(50px); pointer-events: none;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    position: relative; z-index: 2; height: 298px; margin-top: -154px; border-radius: 40px; overflow: hidden; text-align: center;
+  }
+  .cta > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+  .cta .tint { position: absolute; inset: 0; background: linear-gradient(104.06deg, rgba(14,42,102,.7) 2.36%, rgba(2,136,209,.7) 100.37%); }
+  .cta .sec-head { position: relative; padding-top: 60px; }
+  .cta .sec-head h2, .cta .sec-head p { color: #fff; }
+  .btn-outline {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    width: 260px; height: 42px; margin-top: 40px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--primary); color: #608dff;
+    font: 600 16px/24px 'Poppins', sans-serif; box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    transition: background .2s, color .2s;
+  }
+  .btn-outline:hover { background: var(--primary); color: #fff; }
+
+  /* ---------- footer ---------- */
+  .footer { position: relative; background: var(--surface); margin-top: -144px; padding-top: 247px; height: 654px; }
+  .footer-top { display: flex; gap: 64px; align-items: flex-start; }
+  .footer-brand { width: 320px; display: flex; flex-direction: column; gap: 32px; flex-shrink: 0; }
+  .footer-brand p { font-size: 16px; line-height: 24px; color: var(--text-60); }
+  .badges { display: flex; gap: 12px; align-items: flex-end; margin-top: 24px; }
+  .badge { position: relative; overflow: hidden; }
+  .badge img { position: absolute; max-width: none; }
+  .badge.nasscom { width: 131.507px; height: 40px; }
+  .badge.nasscom img { width: 100%; height: 218.18%; left: 0; top: -56.68%; }
+  .badge.iso { width: 48.905px; height: 46px; }
+  .badge.iso img { width: 129.77%; height: 113.68%; left: -15.88%; top: -5.26%; }
+  .footer-links { flex: 1; display: flex; justify-content: space-between; align-items: flex-start; }
+  .fcol { display: flex; flex-direction: column; gap: 16px; }
+  .fcol h4 { font-size: 14px; font-weight: 600; line-height: 20px; text-transform: uppercase; color: var(--text); }
+  .fcol ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .fcol li a { display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; line-height: 24px; color: var(--text-60); transition: color .2s; }
+  .fcol li a:hover { color: var(--text); }
+  .fcol li img { width: 24px; height: 24px; }
+  .fcol .inter { font-family: 'Inter', sans-serif; }
+  .footer-bottom { margin-top: 56px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 32px; }
+  .footer-bottom p { font: 400 16px/24px 'Inter', sans-serif; color: #98a2b3; }
+
+  /* ---------- smaller screens ---------- */
+  @media (max-width: 1240px) {
+    .container { width: auto; }
+    .pcard, .glass { display: none; }
+    .hero { height: auto; padding: 180px 0 120px; }
+    .hero-copy { position: static; transform: none; margin: 0 auto; }
+    .journey { height: auto; padding: 60px 40px; }
+    .journey .sec-head, .timeline, .journey-photo { position: static; }
+    .journey .sec-head { margin-bottom: 60px; }
+    .journey-grid { display: none; }
+    .journey-photo { width: 100%; height: auto; aspect-ratio: 458 / 440; margin-top: 40px; }
+    .tl-items { width: auto; }
+    .vision { height: auto; padding-bottom: 60px; }
+    .vcards { flex-wrap: wrap; }
+    .vcard { flex-basis: 320px; }
+    .team-row { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+    .footprints { height: auto; padding-bottom: 60px; }
+    .footprints .sec-head { position: relative; top: auto; left: auto; transform: none; margin: 0 auto; padding-top: 60px; }
+    .map { position: relative; left: auto; top: auto; margin: 40px auto 0; transform-origin: top center; }
+    .life { height: auto; padding-bottom: 260px; }
+    .tiles { width: 100%; height: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .tile { position: relative !important; left: auto !important; top: auto !important; width: auto !important; height: 260px !important; }
+    .tile > img { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; }
+    .tile.wide { grid-column: span 2; height: 360px !important; }
+    .life-band { display: none; }
+    .footer { height: auto; padding-bottom: 40px; }
+    .footer-top { flex-direction: column; }
+    .footer-links { flex-wrap: wrap; gap: 32px; width: 100%; }
+  }
+  @media (max-width: 1240px) {
+    .play { left: calc(50% - 68px); top: calc(50% - 68px); }
+  }
+  @media (max-width: 760px) {
+    .site-header .nav { display: none; }
+    .hero-copy h1 { font-size: 40px; }
+    .sec-head h2 { font-size: 32px; }
+    .sec-head p, .hero-copy p { font-size: 17px; line-height: 26px; }
+    .journey { padding: 40px 20px; border-radius: 24px; }
+    .vcard-body { position: static; width: auto; padding: 23px; }
+    .vcard-img { width: 100%; }
+    .vcard { height: auto; }
+    .team-row { grid-template-columns: 1fr; }
+    .tiles { grid-template-columns: 1fr; }
+    .tile.wide { grid-column: auto; }
+    .cta { height: auto; padding-bottom: 48px; border-radius: 24px; }
+    .btn-outline { max-width: calc(100% - 48px); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== page-level glows (Figma canvas coordinates, 1440 wide) ===== -->
+  <div class="glow" style="left:calc(var(--ox) - 346px);top:-34px;width:1477px;height:267px"><img src="assets/ellipse4.svg" alt="" style="inset:-187.27% -33.85%;width:167.7%;height:474.54%;left:-33.85%;top:-187.27%"></div>
+  <div class="glow" style="left:calc(var(--ox) - 96px);top:0;width:550px;height:118px"><img src="assets/ellipse-d10df.svg" alt="" style="left:-54.55%;top:-254.24%;width:209.1%;height:608.48%"></div>
+  <div class="glow" style="left:calc(var(--ox) + 237px);top:261px;width:550px;height:118px"><img src="assets/ellipse6.svg" alt="" style="left:-36.36%;top:-169.49%;width:172.72%;height:438.98%"></div>
+  <div class="glow" style="left:calc(var(--ox) + 926px);top:-30px;width:683px;height:267px"><img src="assets/ellipse5.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+  <div class="glow" style="left:calc(var(--ox) + 316px);top:233px;width:683px;height:267px"><img src="assets/ellipse8.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+  <div class="texture" style="top:0;height:917px"></div>
+
+  <!-- ===== header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <div class="left">
+        <a class="logo" href="#" aria-label="MTAP Technologies home"><img src="assets/logo.png" alt="MTAP Technologies"></a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#" class="active">About</a>
+          <button type="button" aria-haspopup="true">Products <img src="assets/chevron-up.svg" alt=""></button>
+          <a href="#">Resources</a>
+          <a href="#">Careers</a>
+        </nav>
+      </div>
+      <a href="#contact" class="btn-primary">Get in touch</a>
+    </div>
+  </header>
+
+  <!-- ===== hero ===== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Building the Success Story<br>Of <span class="grad">Mtap Together</span></h1>
+      <p>When ordinary things are outfitted with an internet connection, extraordinary things happen. So extraordinary, that an entire industrial revolution was spawned and now we’re well on our way to living in a smart and highly digitized world. As a company that provides location based services, MTAP is one of the leaders driving forward the latest industrial revolution otherwise known as Industry 4.0.</p>
+    </div>
+    <div class="hero-band"></div>
+
+    <!-- card: centre -->
+    <div class="pcard" style="left:calc(var(--ox) + 538px);top:573px;width:260px;height:194px;filter:drop-shadow(0 4px 6px #fbd4d4)">
+      <div class="frame" style="width:260px;height:194px;background:linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,0))"></div>
+      <div class="bar" style="width:260px"></div>
+      <div class="dots" style="left:24px;top:8px;width:44.363px;height:8px"><img src="assets/hero-card1-dots.svg" alt=""></div>
+      <div class="photo" style="bottom:0;left:calc(50% + .5px);transform:translateX(-50%);width:199px;height:187px">
+        <img src="assets/hero-card1-img.png" alt="Team member" style="height:107.28%;width:143.58%;left:-15.08%;top:-7.28%">
+      </div>
+    </div>
+
+    <!-- card: right -->
+    <div class="pcard" style="left:calc(var(--ox) + 1048px);top:548px;width:270px;height:226px">
+      <div class="frame" style="width:270px;height:226px;background:linear-gradient(180deg,rgba(11,16,32,.14),rgba(11,16,32,0))"></div>
+      <div class="bar" style="width:270px"></div>
+      <div class="dots" style="left:24px;top:8px;width:40px;height:8px"><img src="assets/hero-card2-dots.svg" alt=""></div>
+      <div class="photo" style="bottom:.47px;left:50%;transform:translateX(-50%);width:228px;height:285px">
+        <img src="assets/hero-card2-img.png" alt="Team member" style="height:100%;width:187.73%;left:-51.23%;top:0">
+      </div>
+    </div>
+
+    <!-- card: left -->
+    <div class="pcard" style="left:calc(var(--ox) + 51px);top:543px;width:283px;height:222px;filter:drop-shadow(0 4px 6px rgba(174,218,251,.7))">
+      <div class="frame" style="width:283px;height:222px;background:linear-gradient(180deg,rgba(11,16,32,.14),rgba(11,16,32,0))"></div>
+      <div class="bar" style="width:283px;top:1px;border-radius:24px 24px 0 0"></div>
+      <div class="dots" style="left:24px;top:8px;width:46px;height:10px"><img src="assets/hero-card3-dots.svg" alt=""></div>
+      <div class="photo" style="bottom:0;left:calc(50% + 1px);transform:translateX(-50%);width:223px;height:242px">
+        <img src="assets/hero-card3-img.png" alt="Team member" style="height:107.37%;width:160.63%;left:-30.71%;top:-7.37%">
+      </div>
+    </div>
+    <div class="glass" style="left:var(--ox);top:685px;width:127px;height:129px;border-width:4px;border-radius:20px;background:linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,0)),rgba(20,26,45,.3);z-index:1"></div>
+
+    <!-- card: top right -->
+    <div class="pcard" style="left:calc(var(--ox) + 1209px);top:164px;width:260px;height:194px;filter:drop-shadow(0 4px 17.25px rgba(211,47,47,.2))">
+      <div class="frame" style="width:260px;height:194px;background:linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,0))"></div>
+      <div class="bar" style="width:260px;border-radius:24px 24px 0 0"></div>
+      <div class="dots" style="left:24px;top:9px;width:40px;height:8px"><img src="assets/hero-card4-dots.svg" alt=""></div>
+      <div class="photo" style="left:41px;top:3px;width:172.642px;height:194px">
+        <img src="assets/hero-card4-img.png" alt="Team member" style="height:157.15%;width:117.09%;left:-8.41%;top:-5.81%">
+      </div>
+      <div class="glass" style="left:-36px;top:161px;width:77px;height:77px;border-top-width:4px;border-radius:12px;background:rgba(255,255,255,.1);box-shadow:0 4px 18.9px rgba(86,185,72,.1)"></div>
+      <div class="glass" style="left:-221px;top:569px;width:90px;height:90px;border-top-width:4px;border-radius:12px;background:rgba(255,255,255,.02);box-shadow:0 2px 21.5px rgba(86,185,72,.1)"></div>
+    </div>
+
+    <!-- card: top left -->
+    <div class="pcard" style="left:calc(var(--ox) - 31px);top:243px;width:260px;height:194px;filter:drop-shadow(0 4px 21.35px rgba(242,99,40,.16))">
+      <div class="frame" style="width:260px;height:194px;background:linear-gradient(180deg,rgba(11,16,32,.2),rgba(11,16,32,0)),rgba(20,26,45,.5)"></div>
+      <div class="bar" style="width:260px;background:rgba(20,26,45,.5)"></div>
+      <div class="photo" style="bottom:0;left:calc(50% - 2.5px);transform:translateX(-50%);width:143px;height:202px">
+        <img src="assets/hero-card5-img.png" alt="Team member" style="height:132.42%;width:282.03%;left:-93.55%;top:-12.01%">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== journey ===== -->
+  <div class="container">
+    <section class="journey" aria-labelledby="journey-title">
+      <div class="glow" style="left:-346px;top:-34px;width:1477px;height:267px"><img src="assets/ellipse4.svg" alt="" style="left:-33.85%;top:-187.27%;width:167.7%;height:474.54%"></div>
+      <div class="glow" style="left:calc(8.33% + 117px);top:261px;width:550px;height:118px"><img src="assets/ellipse6.svg" alt="" style="left:-36.36%;top:-169.49%;width:172.72%;height:438.98%"></div>
+      <div class="glow" style="left:calc(66.67% - 34px);top:-30px;width:683px;height:267px"><img src="assets/ellipse5.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+      <div class="glow" style="left:calc(16.67% + 76px);top:233px;width:683px;height:267px"><img src="assets/ellipse8.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+      <div class="glow" style="left:110px;top:817px;width:1477px;height:267px"><img src="assets/ellipse9.svg" alt="" style="left:-33.85%;top:-187.27%;width:167.7%;height:474.54%"></div>
+
+      <div class="sec-head">
+        <h2 id="journey-title"><span>Our</span> <span class="grad-text">Journey</span> <span>So Far</span></h2>
+        <p>Since our inception in 2014, Mtap has quickly grown to currently serve more than 200 customers across the globe. Since our inception in 2014, Mtap has quickly grown to currently serve more than 200 customers.</p>
+      </div>
+
+      <div class="journey-grid" aria-hidden="true">
+        <div class="tile"></div>
+        <div class="glow" style="left:-625px;top:497px;width:501px;height:496px"><img src="assets/ellipse2932.svg" alt="" style="left:-19.96%;top:-20.16%;width:139.92%;height:140.32%"></div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-rail" aria-hidden="true">
+          <div style="left:2px;top:0;width:24px;height:24px"><img src="assets/tl-dot-active.svg" alt=""></div>
+          <div class="tl-line"><img src="assets/tl-line.svg" alt=""></div>
+          <div style="left:5px;top:149px;width:18px;height:141px"><img src="assets/tl-seg1.svg" alt=""></div>
+          <div style="left:5px;top:290px;width:18px;height:112px"><img src="assets/tl-seg2.svg" alt=""></div>
+          <div style="left:5px;top:402px;width:18px;height:140px"><img src="assets/tl-seg3.svg" alt=""></div>
+          <div style="left:5px;top:542px;width:18px;height:140px"><img src="assets/tl-seg3.svg" alt=""></div>
+          <div style="left:5px;top:682px;width:18px;height:164px"><img src="assets/tl-seg5.svg" alt=""></div>
+          <div class="tl-target"><img src="assets/target-icon.png" alt=""></div>
+        </div>
+        <ol class="tl-items" style="list-style:none">
+          <li class="tl-item"><h3>Jan, 2009</h3><p>Iopex Technologies founded in 2009 to optimize Opex and freeing-up Capex</p></li>
+          <li class="tl-item"><h3>May, 2011</h3><p>Iopex Technologies establishes itself in market as a leader in Opex Optimization services, garnering fortune <strong>500</strong> clients.</p></li>
+          <li class="tl-item"><h3>Apr, 2013</h3><p>Within 4 years of existence, IOPEX grows to 1300 employees.</p></li>
+          <li class="tl-item"><h3>Feb, 2014</h3><p>MTAP Technologies introduces a powerful employee transportation software</p></li>
+          <li class="tl-item"><h3>Aug, 2019</h3><p>All in one fleet automation software solution to cab operates to automate Ad-hoc cab operations</p></li>
+          <li class="tl-item"><h3>Oct, 2020</h3><p class="lg">MTAP rebrands Safetrax for schools as SafeBus and launched SafeBus application for global markets.</p></li>
+          <li class="tl-item"><h3>Aug, 2030</h3><p class="lg">MTAP is planning to launch new products.</p></li>
+        </ol>
+      </div>
+
+      <div class="journey-photo"><img src="assets/journey-photo.png" alt="Driver using the Mtap app on a phone"></div>
+    </section>
+  </div>
+
+  <!-- ===== vision & values ===== -->
+  <section class="vision" aria-labelledby="vision-title">
+    <div class="vision-grid" id="vision-grid" aria-hidden="true"></div>
+    <div class="container">
+      <div class="sec-head">
+        <h2 id="vision-title">Our Vision and Values</h2>
+        <p>Since our inception in 2014, Mtap has quickly grown to currently serve more than 200 customers across the globe. Since our inception in 2014, Mtap has quickly grown to currently serve more than 200 customers.</p>
+      </div>
+      <div class="vcards">
+        <article class="vcard">
+          <div class="glow" style="left:234px;top:482px;width:270px;height:158px"><img src="assets/v-ellipse52.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="glow" style="left:-27px;top:95px;width:442px;height:158px"><img src="assets/v-ellipse51.svg" alt="" style="left:-45.25%;top:-126.58%;width:190.5%;height:353.16%"></div>
+          <div class="vcard-body">
+            <div class="vcard-img"><img src="assets/vision.png" alt="Wooden blocks reading Vision and Mission"></div>
+            <div class="vcard-icon"><img src="assets/featured-icon.svg" alt=""></div>
+            <div><h3>Vision</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p></div>
+          </div>
+        </article>
+        <article class="vcard">
+          <div class="glow" style="left:-76px;top:-148px;width:270px;height:158px"><img src="assets/v-ellipse52.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="glow" style="left:234px;top:482px;width:270px;height:158px"><img src="assets/v-ellipse52.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="glow" style="left:224px;top:-87px;width:270px;height:158px"><img src="assets/v-ellipse50.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="glow" style="left:-11px;top:95px;width:442px;height:158px"><img src="assets/v-ellipse51.svg" alt="" style="left:-45.25%;top:-126.58%;width:190.5%;height:353.16%"></div>
+          <div class="vcard-body">
+            <div class="vcard-img"><img src="assets/vision.png" alt="Wooden blocks reading Vision and Mission"></div>
+            <div class="vcard-icon"><img src="assets/featured-icon.svg" alt=""></div>
+            <div><h3>Mission</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p></div>
+          </div>
+        </article>
+        <article class="vcard">
+          <div class="glow" style="left:234px;top:482px;width:270px;height:158px"><img src="assets/v-ellipse52.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="glow" style="left:224px;top:-87px;width:270px;height:158px"><img src="assets/v-ellipse50.svg" alt="" style="left:-37.04%;top:-63.29%;width:174.08%;height:226.58%"></div>
+          <div class="vcard-body">
+            <div class="vcard-img"><img class="tall" src="assets/values.png" alt="Blocks reading Mission, Vision, Values"></div>
+            <div class="vcard-icon"><img src="assets/featured-icon.svg" alt=""></div>
+            <div><h3>Values &amp; Beliefs</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.</p></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- glows behind team / gallery -->
+  <div class="glow" style="left:calc(var(--ox) - 350.1px);top:3265.36px;width:609.2px;height:618.12px;display:flex;align-items:center;justify-content:center">
+    <div style="position:relative;flex:none;width:601px;height:267px;transform:rotate(-46.08deg)"><img src="assets/ellipse7.svg" alt="" style="position:absolute;max-width:none;left:-83.19%;top:-187.27%;width:266.38%;height:474.54%"></div>
+  </div>
+  <div class="glow" style="left:calc(var(--ox) - 1.9px);top:3625.45px;width:1443.67px;height:283.85px"><img src="assets/ellipse-d2f23.svg" alt="" style="left:-34.71%;top:-187.27%;width:169.42%;height:474.54%"></div>
+  <div class="glow" style="left:calc(var(--ox) - 297px);top:4829.87px;width:1443.67px;height:283.85px"><img src="assets/ellipse-d2f23.svg" alt="" style="left:-34.71%;top:-187.27%;width:169.42%;height:474.54%"></div>
+  <div class="glow" style="left:calc(var(--ox) + 560px);top:5480.87px;width:1443.67px;height:283.85px"><img src="assets/ellipse-d2f23.svg" alt="" style="left:-34.71%;top:-187.27%;width:169.42%;height:474.54%"></div>
+  <div class="glow" style="left:calc(var(--ox) + 839px);top:4851px;width:683px;height:267px"><img src="assets/ellipse-6665f.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+  <div class="glow" style="left:calc(var(--ox) - 242px);top:5433px;width:683px;height:267px"><img src="assets/ellipse-6665f.svg" alt="" style="left:-73.21%;top:-187.27%;width:246.42%;height:474.54%"></div>
+
+  <!-- ===== team ===== -->
+  <div class="container">
+    <section class="team" aria-labelledby="team-title">
+      <div class="sec-head">
+        <h2 id="team-title"><span>Our</span> <span class="grad-text">Team</span></h2>
+        <p style="max-width:none">Our team is a dedicated group of innovators who blend artistry with cutting-edge technology. We thrive in a collaborative, informal environment where creativity flourishes, ensuring each project is crafted with precision.</p>
+      </div>
+      <div class="team-rows" id="team-rows"></div>
+    </section>
+  </div>
+
+  <!-- ===== footprints ===== -->
+  <section class="footprints" aria-labelledby="footprints-title">
+    <div class="glow" style="left:calc(var(--ox) + 108px);top:91px;width:1224px;height:544px"><img src="assets/map-glow.svg" alt="" style="left:-40.85%;top:-91.91%;width:181.7%;height:283.82%"></div>
+    <div class="sec-head">
+      <h2 id="footprints-title">Our Footprints</h2>
+      <p>Nationwide collaboration : Uniting talents from every corner of India</p>
+    </div>
+    <div class="map" id="map">
+      <img class="dots" src="assets/world-map.svg" alt="World map">
+    </div>
+  </section>
+
+  <!-- ===== life at mtap ===== -->
+  <section class="life" aria-labelledby="life-title">
+    <div class="texture" style="top:0;height:1214px"></div>
+    <div class="container">
+      <div class="sec-head">
+        <h2 id="life-title"><span>Glimpse of Life at</span> <span class="grad-text" style="background-image:linear-gradient(90deg,#6f95ff 66.538%,#a38fff 94.423%)">Mtap</span></h2>
+        <p>Our team is a dedicated group of innovators who blend artistry with cutting-edge technology. We thrive in a collaborative, informal environment where creativity flourishes, ensuring each project is crafted with precision.</p>
+      </div>
+      <div class="tiles">
+        <div class="tile wide" style="left:0;top:0;width:592px;height:428px">
+          <img class="zoom" src="assets/g-5518.png" alt="Developers at work in the office" style="left:-187px;top:-207px;width:1030px;height:744.662px">
+          <div class="play"><img src="assets/play.svg" alt=""></div>
+        </div>
+        <div class="tile" style="left:608px;top:0;width:288px;height:206px">
+          <img class="zoom" src="assets/g-5516.png" alt="Colleague smiling in a meeting room" style="left:-72px;top:-1px;width:392px;height:280px">
+        </div>
+        <div class="tile" style="left:608px;top:222px;width:287px;height:428px">
+          <img class="zoom" src="assets/g-5520.png" alt="Colourful lounge chair in the office" style="left:-16px;top:-318px;width:630px;height:939.579px">
+        </div>
+        <div class="tile" style="left:913px;top:0;width:287px;height:428px">
+          <img src="assets/g-5521.png" alt="" style="left:-177px;top:-134px;width:509px;height:760px">
+          <img class="zoom" src="assets/g-5522.png" alt="Two colleagues laughing at their laptops" style="left:-177px;top:-134px;width:509px;height:760px">
+        </div>
+        <div class="tile" style="left:304px;top:444px;width:287px;height:206px">
+          <img class="zoom" src="assets/g-5524.png" alt="Colleagues talking in the lounge" style="left:-203px;top:-81px;width:560px;height:401px">
+        </div>
+        <div class="tile" style="left:1px;top:444px;width:287px;height:206px">
+          <img class="zoom" src="assets/g-5525.png" alt="Colleague working at a desk" style="left:-37px;top:-50px;width:459px;height:329.456px">
+        </div>
+        <a class="tile more" href="#" style="left:913px;top:444px;width:287px;height:206px" aria-label="See 10 more photos">
+          <img src="assets/g-74.png" alt="" style="left:0;top:0;width:100%;height:100%;opacity:.4">
+          <div class="shade"></div>
+          <div class="label"><img src="assets/plus.svg" alt=""> 10 Photos</div>
+        </a>
+      </div>
+    </div>
+    <div class="life-band"></div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <div class="container" style="z-index:2">
+    <section class="cta" id="contact" aria-labelledby="cta-title">
+      <img src="assets/cta-waves.png" alt="">
+      <div class="tint"></div>
+      <div class="sec-head">
+        <h2 id="cta-title">Join Us to Make Your Mark</h2>
+        <p>Mtap way aims aims to make working fun, engaging and impactful.</p>
+      </div>
+      <a href="#" class="btn-outline">Join Our Team</a>
+    </section>
+  </div>
+
+  <!-- ===== footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="logo" href="#" aria-label="MTAP Technologies home"><img src="assets/logo.png" alt="MTAP Technologies"></a>
+          <div>
+            <p>Automating the transportation industry with our innovative B2B SaaS solutions - Safetrax, SafeBus, and Autologix to embrace shared mobility.</p>
+            <div class="badges">
+              <div class="badge nasscom"><img src="assets/nasscom.png" alt="NASSCOM Certified Member"></div>
+              <div class="badge iso"><img src="assets/iso.png" alt="ISO certified"></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="fcol" style="width:183px">
+            <h4>Useful Links</h4>
+            <ul><li><a href="#">About</a></li><li><a href="#">Resources</a></li><li><a href="#">Careers</a></li><li><a href="#contact">Contact</a></li></ul>
+          </div>
+          <div class="fcol" style="width:176px">
+            <h4>Solutions</h4>
+            <ul><li><a href="#">Safetrax</a></li><li><a href="#">Safebus</a></li><li><a href="#" class="inter">Autologix</a></li></ul>
+          </div>
+          <div class="fcol" style="width:275px">
+            <h4>contact</h4>
+            <ul>
+              <li><a href="tel:+918046808888"><img src="assets/phone.svg" alt="">+91-80-46808888</a></li>
+              <li><a href="mailto:info@mtap.in"><img src="assets/envelope.svg" alt="">info@mtap.in</a></li>
+            </ul>
+          </div>
+          <div class="fcol" style="flex:1;min-width:150px">
+            <h4>FOLLOW LIFE AT Mtap</h4>
+            <ul>
+              <li><a href="#" aria-label="Facebook"><img src="assets/facebook.svg" alt=""></a></li>
+              <li><a href="#" aria-label="LinkedIn"><img src="assets/linkedin.svg" alt=""></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom"><p>Copyright© 2024 MTAP.</p></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Vision background: 65px grid cells on a 72px pitch (27 x 16 in the design)
+  (function () {
+    const grid = document.getElementById('vision-grid');
+    const frag = document.createDocumentFragment();
+    for (let r = 0; r < 16; r++) {
+      for (let c = 0; c < 27; c++) {
+        const img = document.createElement('img');
+        img.src = 'assets/grid-cell.svg';
+        img.alt = '';
+        img.style.left = c * 72 + 'px';
+        img.style.top = r * 72 + 'px';
+        frag.appendChild(img);
+      }
+    }
+    grid.appendChild(frag);
+    // keep the grid centred on the 1440 design canvas
+    const place = () => { grid.style.left = (window.innerWidth / 2 - 720 - 9) + 'px'; };
+    place();
+    window.addEventListener('resize', place);
+  })();
+
+  // Team: two identical rows of four
+  (function () {
+    const people = [
+      { av: 'av1', img: 'assets/team1.jpg', cls: '' },
+      { av: 'av2', img: 'assets/team2.jpg', cls: '' },
+      { av: 'av3', img: 'assets/team3.png', cls: 'b2' },
+      { av: 'av4', img: 'assets/team4.png', cls: 'plain' }
+    ];
+    const rows = document.getElementById('team-rows');
+    for (let r = 0; r < 2; r++) {
+      const row = document.createElement('div');
+      row.className = 'team-row';
+      row.innerHTML = people.map(p => `
+        <div class="member">
+          <div class="member-card"><h3>Ravinder Singh</h3><p>Vice President - Engineering</p></div>
+          <div class="avatar ${p.av} ${p.cls}"><img src="${p.img}" alt="Ravinder Singh"></div>
+        </div>`).join('');
+      rows.appendChild(row);
+    }
+  })();
+
+  // Map: tooltips and pins (positions in map coordinates)
+  (function () {
+    const map = document.getElementById('map');
+    const tips = [[153.5, 116], [304.5, 223], [532.5, 138], [790.5, 102], [763.5, 262]];
+    const pins = [[217, 220, 24], [373, 326, 24], [592, 240, 24], [851, 203, 24], [829, 362, 23]];
+    pins.forEach(([x, y, w]) => {
+      const el = document.createElement('div');
+      el.className = 'pin';
+      el.style.cssText = `left:${x}px;top:${y}px;width:${w}px`;
+      el.innerHTML = '<img src="assets/pin.svg" alt="">';
+      map.appendChild(el);
+    });
+    tips.forEach(([x, y]) => {
+      const el = document.createElement('div');
+      el.className = 'tip';
+      el.style.cssText = `left:${x}px;top:${y}px`;
+      el.innerHTML = `
+        <div class="tip-body">
+          <div class="tip-flag"><img src="assets/flag.png" alt=""></div>
+          <div><h4>Melbourne, AUS</h4><p>100 Smith Street<br>Collingwood VIC 3066 AU</p></div>
+        </div>
+        <div class="tip-arrow"><img src="assets/tooltip-arrow.svg" alt=""></div>`;
+      map.appendChild(el);
+    });
+    // shrink the whole map (dots, pins, tooltips) together on narrow screens
+    const fit = () => { map.style.zoom = Math.min(1, (window.innerWidth - 48) / 1024); };
+    fit();
+    window.addEventListener('resize', fit);
+  })();
+</script>
+</body>
+</html>
